@@ -1,0 +1,9 @@
+<resources>
+    <string name="app_name">搞笑圈</string>
+    <string name="radioVideo">视频</string>
+    <string name="radioJoke">段子</string>
+    <string name="radioPicture">趣图</string>
+
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+</resources>

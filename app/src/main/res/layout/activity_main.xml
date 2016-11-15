@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <TextView
+        android:id="@+id/tv_title"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:background="@color/titltBackground"
+        android:gravity="center" />
+
+    <android.support.v4.view.ViewPager
+        android:id="@+id/vp_show"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_below="@+id/tv_title"
+        android:layout_above="@+id/rg_menu"/>
+
+
+    <RadioGroup
+        android:id="@+id/rg_menu"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:gravity="center"
+        android:orientation="horizontal">
+
+        <RadioButton
+            android:id="@+id/rb_video"
+            style="@style/RadioButton"
+            android:checked="true"
+            android:drawableTop="@drawable/radio_video_selector"
+            android:text="@string/radioVideo" />
+
+        <RadioButton
+            android:id="@+id/rb_joke"
+            style="@style/RadioButton"
+            android:drawableTop="@drawable/radio_joke_selector"
+            android:text="@string/radioJoke" />
+
+        <RadioButton
+            android:id="@+id/rb_picture"
+            style="@style/RadioButton"
+            android:drawableTop="@drawable/radio_picture_selector"
+            android:text="@string/radioPicture" />
+    </RadioGroup>
+</RelativeLayout>
