@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    android:layout_marginRight="10dp"
+    android:layout_marginLeft="10dp">
+    <TextView
+        android:layout_width="60dp"
+        android:layout_height="20dp"
+        android:textColor="@color/textColor"
+        android:background="@color/titltBackground"
+        android:gravity="center"
+        android:text="@string/textGodReview"/>
+    <ListView
+        android:id="@+id/lv_list_godreview"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="#f7f7f9"
+        />
+</LinearLayout>

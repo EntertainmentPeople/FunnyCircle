@@ -6,4 +6,6 @@
     <color name="radioNormal">#cccccc</color>
     <color name="radioSelected">#f94e4d</color>
     <color name="titltBackground">#f94e4d</color>
+    <color name="textTime">#cccccc</color>
+    <color name="textColor">#ffffff</color>
 </resources>

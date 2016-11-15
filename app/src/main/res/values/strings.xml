@@ -3,6 +3,9 @@
     <string name="radioVideo">视频</string>
     <string name="radioJoke">段子</string>
     <string name="radioPicture">趣图</string>
+    <string name="btnShare">分享</string>
+    <string name="textLook">点击查看全图</string>
+    <string name="textGodReview">神评论</string>
 
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>

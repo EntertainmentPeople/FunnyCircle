@@ -14,6 +14,8 @@ import android.widget.TextView;
 
 import com.klj.funnycircle.utils.FragmentUtils;
 
+import io.vov.vitamio.Vitamio;
+
 /**
  * 主界面
  */
@@ -37,8 +39,9 @@ public class MainActivity extends AppCompatActivity {
      */
     private void init() {
         findView();
-        setAdapter();
         setListener();
+        setAdapter();
+
     }
 
     /**
@@ -66,6 +69,7 @@ public class MainActivity extends AppCompatActivity {
         rbVideo= (RadioButton) findViewById(R.id.rb_video);
         rbJoke= (RadioButton) findViewById(R.id.rb_joke);
         rbPicture= (RadioButton) findViewById(R.id.rb_picture);
+        tvTitle.setText("搞笑视频");
     }
 
     /**
@@ -93,14 +97,17 @@ public class MainActivity extends AppCompatActivity {
     private class MyRadioButtonChangeListener implements RadioGroup.OnCheckedChangeListener {
         @Override
         public void onCheckedChanged(RadioGroup group, int checkedId) {
-            switch (checkedId){
+            switch (group.getCheckedRadioButtonId()){
                 case R.id.rb_video:
+                    tvTitle.setText("搞笑视频");
                     vpShow.setCurrentItem(0);
                     break;
                 case R.id.rb_joke:
+                    tvTitle.setText("段子");
                     vpShow.setCurrentItem(1);
                     break;
                 case R.id.rb_picture:
+                    tvTitle.setText("趣图");
                     vpShow.setCurrentItem(2);
                     break;
             }
@@ -115,21 +122,9 @@ public class MainActivity extends AppCompatActivity {
         public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
 
         }
-
         @Override
         public void onPageSelected(int position) {
             ((RadioButton)rgMenu.getChildAt(position)).setChecked(true);
-            switch (position){
-                case 0:
-                    tvTitle.setText("搞笑视频");
-                    break;
-                case 1:
-                    tvTitle.setText("段子");
-                    break;
-                case 2:
-                    tvTitle.setText("趣图");
-                    break;
-            }
         }
 
         @Override
