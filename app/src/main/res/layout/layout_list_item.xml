@@ -68,7 +68,7 @@
 
             <ImageView
                 android:layout_width="35dp"
-                android:layout_height="25dp"
+                android:layout_height="20dp"
                 android:src="@drawable/hot_point_icon" />
 
             <TextView
@@ -85,7 +85,7 @@
 
             <ImageView
                 android:layout_width="35dp"
-                android:layout_height="25dp"
+                android:layout_height="20dp"
                 android:src="@drawable/comment_count_icon" />
 
             <TextView
@@ -102,7 +102,7 @@
 
             <ImageView
                 android:layout_width="35dp"
-                android:layout_height="25dp"
+                android:layout_height="20dp"
                 android:src="@drawable/nice_comment_icon" />
 
             <TextView

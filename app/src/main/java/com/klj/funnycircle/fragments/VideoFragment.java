@@ -2,6 +2,8 @@ package com.klj.funnycircle.fragments;
 
 
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.Message;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.util.Log;
@@ -17,6 +19,7 @@ import com.klj.funnycircle.entity.ImageInfo;
 import com.klj.funnycircle.entity.ItemInfo;
 import com.klj.funnycircle.entity.VideoInfo;
 import com.klj.funnycircle.utils.ConstantUtils;
+import com.klj.funnycircle.utils.Utils;
 import com.lzy.okhttputils.OkHttpUtils;
 import com.lzy.okhttputils.callback.StringCallback;
 
@@ -27,8 +30,6 @@ import org.json.JSONObject;
 import java.util.ArrayList;
 import java.util.List;
 
-import io.vov.vitamio.Vitamio;
-import io.vov.vitamio.widget.VideoView;
 import okhttp3.Call;
 import okhttp3.Response;
 
@@ -59,7 +60,6 @@ public class VideoFragment extends Fragment {
     @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
-        Vitamio.isInitialized(getActivity());
         init();
     }
 
@@ -87,6 +87,14 @@ public class VideoFragment extends Fragment {
         lvShow.setAdapter(myListViewAdapter);
     }
 
+    Handler handler=new Handler(){
+        @Override
+        public void handleMessage(Message msg) {
+            super.handleMessage(msg);
+            myListViewAdapter.notifyDataSetChanged();
+        }
+    };
+
     /**
      * 初始化数据
      */
@@ -99,6 +107,7 @@ public class VideoFragment extends Fragment {
                             JSONObject jsonObject = new JSONObject(s);
                             if (jsonObject.optInt("rescode") == 0) {
                                 parseJsonData(s, jsonObject);
+                                handler.sendEmptyMessage(100);
                             }
                         } catch (JSONException e) {
                             e.printStackTrace();
@@ -181,8 +190,8 @@ public class VideoFragment extends Fragment {
         @Override
         public void click(View v,int position) {
             switch (v.getId()) {
-                case R.id.vv_list_video:
-                    ((VideoView)v).start();
+                case R.id.btn_list_share:
+                    Utils.showShare(getActivity());
                     break;
             }
         }

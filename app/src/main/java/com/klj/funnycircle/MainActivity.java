@@ -14,7 +14,6 @@ import android.widget.TextView;
 
 import com.klj.funnycircle.utils.FragmentUtils;
 
-import io.vov.vitamio.Vitamio;
 
 /**
  * 主界面

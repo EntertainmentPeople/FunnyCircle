@@ -2,8 +2,7 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="horizontal"
-    android:layout_margin="10dp">
+    android:orientation="horizontal">
 
     <ImageView
         android:id="@+id/iv_list_comment_portrait"
@@ -21,16 +20,15 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:textColor="#ccc"
-            android:layout_toLeftOf="@+id/rb_list_comment_nice"
+            android:layout_marginRight="50dp"
             android:textSize="20sp" />
 
         <RadioButton
             android:id="@+id/rb_list_comment_nice"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_height="26dp"
             android:button="@null"
             android:layout_alignParentRight="true"
-            android:layout_marginRight="10dp"
             android:drawableLeft="@drawable/nice_comment_icon"
             android:paddingRight="10dp" />
 
@@ -38,7 +36,6 @@
             android:id="@+id/tv_list_comment_content"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:textColor="#ccc"
             android:textSize="20sp"
             android:layout_below="@+id/tv_list_comment_name"/>
     </RelativeLayout>

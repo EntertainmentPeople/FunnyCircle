@@ -4,11 +4,10 @@
     android:layout_height="match_parent"
     android:orientation="vertical">
 
-    <io.vov.vitamio.widget.VideoView
+    <fm.jiecao.jcvideoplayer_lib.JCVideoPlayerStandard
         android:id="@+id/vv_list_video"
         android:layout_width="match_parent"
         android:layout_height="200dp"
-        android:clickable="true"
         android:layout_marginLeft="10dp"
         android:layout_marginRight="10dp" />
 </LinearLayout>

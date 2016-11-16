@@ -19,7 +19,7 @@ public class Utils {
      */
     public static String toTransferTime(String timestampString) {
         Long timestamp = Long.parseLong(timestampString);
-        String date = new java.text.SimpleDateFormat("MM/dd HH:mm").format(new java.util.Date(timestamp));
+        String date = new java.text.SimpleDateFormat("yyyy/MM/dd HH:mm:ss").format(new java.util.Date(timestamp));
         return date;
     }
 
