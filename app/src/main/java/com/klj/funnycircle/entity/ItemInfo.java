@@ -1,11 +1,12 @@
 package com.klj.funnycircle.entity;
 
+import java.io.Serializable;
 import java.util.List;
 
 /**
  * 条目信息
  */
-public class ItemInfo {
+public class ItemInfo implements Serializable {
 
     /**
      * postTime : 1479091150000

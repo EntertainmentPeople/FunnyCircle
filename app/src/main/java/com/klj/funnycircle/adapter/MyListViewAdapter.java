@@ -13,6 +13,8 @@ import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
 
+import com.bumptech.glide.Glide;
+import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.klj.funnycircle.R;
 import com.klj.funnycircle.entity.ImageInfo;
 import com.klj.funnycircle.entity.ItemInfo;
@@ -70,7 +72,6 @@ public class MyListViewAdapter extends BaseAdapter implements View.OnClickListen
         }
         ItemInfo itemInfo = lists.get(position);
         setValue(vh, itemInfo);
-
         setClickListener(vh, position);
         return convertView;
     }
@@ -147,9 +148,12 @@ public class MyListViewAdapter extends BaseAdapter implements View.OnClickListen
      */
     private void showPicture(ViewHolder vh, ItemInfo itemInfo) {
         List<ImageInfo> images = itemInfo.getImages();
-        for (int i = 0; i < images.size(); i++) {
-            Picasso.with(context).load(images.get(i).getThumbUrl()).into(vh.ivPic);
-        }
+            if(images.get(0).isGif()){
+                Glide.with(context).load(images.get(0).getUrl()).asGif().diskCacheStrategy(DiskCacheStrategy.SOURCE).into(vh.ivPic);
+            }else {
+                Picasso.with(context).load(images.get(0).getThumbUrl()).into(vh.ivPic);
+            }
+
     }
 
     /**

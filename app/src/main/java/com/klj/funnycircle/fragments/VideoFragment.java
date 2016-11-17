@@ -6,22 +6,26 @@ import android.os.Handler;
 import android.os.Message;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.support.v4.widget.SwipeRefreshLayout;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AbsListView;
 import android.widget.ListView;
 
 import com.klj.funnycircle.R;
 import com.klj.funnycircle.adapter.MyListViewAdapter;
 import com.klj.funnycircle.entity.CommentInfo;
-import com.klj.funnycircle.entity.ImageInfo;
 import com.klj.funnycircle.entity.ItemInfo;
 import com.klj.funnycircle.entity.VideoInfo;
+import com.klj.funnycircle.listener.MyOnItemClickListener;
 import com.klj.funnycircle.utils.ConstantUtils;
 import com.klj.funnycircle.utils.Utils;
 import com.lzy.okhttputils.OkHttpUtils;
 import com.lzy.okhttputils.callback.StringCallback;
+import com.orangegangsters.github.swipyrefreshlayout.library.SwipyRefreshLayout;
+import com.orangegangsters.github.swipyrefreshlayout.library.SwipyRefreshLayoutDirection;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -30,6 +34,10 @@ import org.json.JSONObject;
 import java.util.ArrayList;
 import java.util.List;
 
+import in.srain.cube.views.ptr.PtrClassicDefaultHeader;
+import in.srain.cube.views.ptr.PtrClassicFrameLayout;
+import in.srain.cube.views.ptr.PtrDefaultHandler;
+import in.srain.cube.views.ptr.PtrFrameLayout;
 import okhttp3.Call;
 import okhttp3.Response;
 
@@ -38,8 +46,10 @@ import okhttp3.Response;
  */
 public class VideoFragment extends Fragment {
     private ListView lvShow;    //ListView控件
+    private PtrClassicFrameLayout pcfRefresh;  //下拉刷新
     private List<ItemInfo> itemInfos = new ArrayList<>();     //要显示的数据
     MyListViewAdapter myListViewAdapter;
+    private long minTime = 0;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -54,6 +64,7 @@ public class VideoFragment extends Fragment {
      * @param view
      */
     private void findView(View view) {
+        pcfRefresh = (PtrClassicFrameLayout) view.findViewById(R.id.pcf_video_refresh);
         lvShow = (ListView) view.findViewById(R.id.lv_video);
     }
 
@@ -67,9 +78,20 @@ public class VideoFragment extends Fragment {
      * 初始化
      */
     private void init() {
-        initData();
+        setHeader();
+        initData(ConstantUtils.ROOT_PATH + ConstantUtils.INTERFACE_PATH + ConstantUtils.VIDEO);
         setAdapter();
         setListener();
+    }
+
+    /**
+     * 设置下拉刷新的头
+     */
+    private void setHeader() {
+        PtrClassicDefaultHeader defaultHeader = new PtrClassicDefaultHeader(getActivity());
+        pcfRefresh.setHeaderView(defaultHeader);
+        pcfRefresh.addPtrUIHandler(defaultHeader);
+
     }
 
     /**
@@ -77,20 +99,33 @@ public class VideoFragment extends Fragment {
      */
     private void setListener() {
         myListViewAdapter.setOnClickCallBackListner(new MyListItemClickListener());
+        lvShow.setOnItemClickListener(new MyOnItemClickListener(getActivity(), itemInfos, ConstantUtils.TYPE_VIDEO));
+        lvShow.setOnScrollListener(new MyListViewScrollListener());
+        pcfRefresh.setPtrHandler(new PtrDefaultHandler() {
+            @Override
+            public void onRefreshBegin(PtrFrameLayout frame) {
+                itemInfos.clear();
+                initData(ConstantUtils.ROOT_PATH + ConstantUtils.INTERFACE_PATH + ConstantUtils.VIDEO);
+            }
+        });
     }
 
     /**
      * 设置适配器
      */
     private void setAdapter() {
-        myListViewAdapter=new MyListViewAdapter(getActivity(),itemInfos);
+        myListViewAdapter = new MyListViewAdapter(getActivity(), itemInfos);
         lvShow.setAdapter(myListViewAdapter);
     }
 
-    Handler handler=new Handler(){
+    /**
+     * 更新适配器
+     */
+    Handler handler = new Handler() {
         @Override
         public void handleMessage(Message msg) {
             super.handleMessage(msg);
+            pcfRefresh.refreshComplete();
             myListViewAdapter.notifyDataSetChanged();
         }
     };
@@ -98,8 +133,8 @@ public class VideoFragment extends Fragment {
     /**
      * 初始化数据
      */
-    private void initData() {
-        OkHttpUtils.get(ConstantUtils.ROOT_PATH + ConstantUtils.INTERFACE_PATH + ConstantUtils.VIDEO)
+    private void initData(String path) {
+        OkHttpUtils.get(path)
                 .execute(new StringCallback() {
                     @Override
                     public void onSuccess(String s, Call call, Response response) {
@@ -109,6 +144,7 @@ public class VideoFragment extends Fragment {
                                 parseJsonData(s, jsonObject);
                                 handler.sendEmptyMessage(100);
                             }
+                            minTime = jsonObject.optLong("minTime");
                         } catch (JSONException e) {
                             e.printStackTrace();
                         }
@@ -166,7 +202,6 @@ public class VideoFragment extends Fragment {
 
     /**
      * 解析视频
-     *
      * @param videos
      */
     private List<VideoInfo> parseVideos(JSONArray videos) {
@@ -188,12 +223,32 @@ public class VideoFragment extends Fragment {
      */
     private class MyListItemClickListener implements MyListViewAdapter.MyListViewAdapterCallBack {
         @Override
-        public void click(View v,int position) {
+        public void click(View v, int position) {
             switch (v.getId()) {
                 case R.id.btn_list_share:
                     Utils.showShare(getActivity());
                     break;
             }
+        }
+
+    }
+
+    /**
+     * 为ListView设置滑动监听事件
+     */
+    private class MyListViewScrollListener implements AbsListView.OnScrollListener {
+        private boolean isFoot=false;
+        @Override
+        public void onScrollStateChanged(AbsListView view, int scrollState) {
+            if(isFoot&& AbsListView.OnScrollListener.SCROLL_STATE_IDLE==scrollState){
+                String path= ConstantUtils.ROOT_PATH + ConstantUtils.INTERFACE_PATH + ConstantUtils.VIDEO+"?time="+minTime;
+                initData(path);
+            }
+        }
+
+        @Override
+        public void onScroll(AbsListView view, int firstVisibleItem, int visibleItemCount, int totalItemCount) {
+            isFoot=firstVisibleItem+visibleItemCount==totalItemCount;
         }
     }
 }

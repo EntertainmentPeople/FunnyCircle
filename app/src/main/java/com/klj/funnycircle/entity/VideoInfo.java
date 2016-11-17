@@ -1,9 +1,11 @@
 package com.klj.funnycircle.entity;
 
+import java.io.Serializable;
+
 /**
  * 视频信息
  */
-public class VideoInfo {
+public class VideoInfo implements Serializable {
 
     /**
      * length : 172

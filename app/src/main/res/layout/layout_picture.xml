@@ -13,7 +13,8 @@
         <ImageView
             android:id="@+id/iv_list_pic"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content" />
+            android:layout_height="wrap_content"
+            android:maxHeight="500dp"/>
 
         <TextView
             android:id="@+id/tv_list_show"
@@ -22,7 +23,6 @@
             android:layout_gravity="center_horizontal|bottom"
             android:text="@string/textLook"
             android:textColor="@color/textColor"
-
             android:textSize="20sp" />
     </FrameLayout>
 

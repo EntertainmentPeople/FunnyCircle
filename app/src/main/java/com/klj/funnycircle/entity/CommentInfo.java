@@ -1,9 +1,11 @@
 package com.klj.funnycircle.entity;
 
+import java.io.Serializable;
+
 /**
  *评论信息
  */
-public class CommentInfo {
+public class CommentInfo implements Serializable {
 
     /**
      * isNice : true

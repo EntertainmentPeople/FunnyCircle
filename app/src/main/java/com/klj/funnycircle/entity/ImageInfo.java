@@ -1,9 +1,11 @@
 package com.klj.funnycircle.entity;
 
+import java.io.Serializable;
+
 /**
  * 图片信息
  */
-public class ImageInfo {
+public class ImageInfo implements Serializable {
     /**
      * isGif : false
      * width : 677
